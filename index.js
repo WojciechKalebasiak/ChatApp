@@ -2,7 +2,8 @@
 const app = require('express')();
 const http = require('http');
 const socketIO = require('socket.io');
-
+const UserService = require('./UserService');
+const userService = new US();
 //Basic configuration
 const server = http.createServer(app);
 const io = socketIO(server);
