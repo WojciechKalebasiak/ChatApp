@@ -16,9 +16,11 @@ app.get('/', function (req,res) {
    res.render('start'); 
 });
 io.on('connection', function (socket) {
-    userService.addUser({
-    id:socket.id,
-    name
+    socket.on('join', function (name) {
+        userService.addUser({
+            id: socket.id,
+            name
+        });   
     });
     io.emit('update', {
         users: userService.getAllUsers()
