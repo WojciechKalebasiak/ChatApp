@@ -4,7 +4,9 @@
   "description": "Simple Chat Using Node.js and React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "set NODE_ENV=production&webpack",
+    "start": "webpack-dev-server --inline --hot --config ./webpack.config.js"
   },
   "keywords": [
     "chat",

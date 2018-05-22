@@ -3,13 +3,13 @@ class UserService {
         this.users = [];
     }
     getAllUsers() {
-        return this.usersl
+        return this.users;
     }
     getUserById(userID) {
         return this.users.find(user=>user.id===userID);
     }
     addUser(user) {
-        this.user=[user,...this.users];
+        this.users=[user,...this.users];
     }
     removeUser(userID) {
         return this.users.filter(user=>user.id !== userID);

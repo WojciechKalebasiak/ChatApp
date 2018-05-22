@@ -1,29 +1,28 @@
 //Modules
-const app = require('express')();
+const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const UserService = require('./UserService');
-const userService = new US();
+const userService = new UserService();
 //Basic configuration
+const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
 app.use(express.static(__dirname + '/public'));
-app.set('view engine', 'pug');
-app.set('views', './views');
 
 app.get('/', function (req,res) {
-   res.render('start'); 
+   res.sendFile(__dirname + '/index.html'); 
 });
 io.on('connection', function (socket) {
     socket.on('join', function (name) {
         userService.addUser({
             id: socket.id,
             name
+        });
+        io.emit('update', {
+            users: userService.getAllUsers()
         });   
-    });
-    io.emit('update', {
-        users: userService.getAllUsers()
     });
 });
 io.on('connection', function (socket) {
@@ -36,7 +35,7 @@ io.on('connection', function (socket) {
 });
 io.on('connection', function (socket) {
     socket.on('message', (message)=>{
-        const {name} = user.getUserById(socket.id);
+        const {name} = userService.getUserById(socket.id);
         socket.broadcast.emit('message', {
             text:message.text,
             from: name

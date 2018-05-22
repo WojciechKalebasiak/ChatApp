@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import styles from '../../styles/App.css';
-import MessageForm from '../MessageForm';
+import MessageForm from './MessageForm';
 import MessageList from '../MessageList';
-import UserList from '../UserList';
-import UserForm from '../UserForm';
+import UsersList from '../UsersList';
+import UserForm from './UserForm';
 
 const socket = io('/');
 
@@ -23,15 +23,21 @@ class App extends Component {
         socket.on('update', ({ users }) => this.chatUpdate(users));
     }
     messageReceive(message) {
-        const messages = [message, ...this.state.messages];
+        const messages = [...this.state.messages,message];
         this.setState({ messages });
     }
-    chatUpdate(users) {
+    handleMessageSubmit(message) {
+        const messages = [...this.state.messages,message];
+        this.setState({ messages });
+        socket.emit('message', message);
+    }
+    chatUpdate(users){
         this.setState({ users });
     }
     handleUserSubmit(name) {
         this.setState({ name });
         socket.emit('join', name);
+
     }
     renderLayout() {
         return (
@@ -45,7 +51,7 @@ class App extends Component {
                     </div>
                 </div>
                 <div className={styles.AppBody}>
-                    <UserList
+                    <UsersList
                         users={this.state.users}
                     />
                     <div className={styles.MessageWrapper}>
@@ -62,7 +68,7 @@ class App extends Component {
         );
     }
     renderUserForm() {
-        reutrn(<UserForm onUserSubmit={name => this.handleUserSubmit(name)} />);
+        return (<UserForm onUserSubmit={name => this.handleUserSubmit(name)} />);
     }
     render() {
         return this.state.name !== '' ? this.renderLayout() : this.renderUserForm();

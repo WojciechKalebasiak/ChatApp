@@ -7,22 +7,25 @@ body {
     flex-direction: column;
     flex: 1;
     height: 100vh;
+    background-color: #484e59;
+    color: white;
 }
 
 .AppHeader {
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 4px solid #e5a22d;
 }
 
 .AppTitle {
     display: flex;
     width: 25vw;
-    border-right: 1px solid #ccc;
+    border-right: 4px solid #e5a22d;
     justify-content: center;
     box-sizing: border-box;
     padding: 20px;
+    font-size: 2em;
 }
 
 .AppRoom {
@@ -31,6 +34,7 @@ body {
     justify-content: center;
     box-sizing: border-box;
     padding: 20px;
+    font-size: 2em;
 }
 
 .AppBody {
